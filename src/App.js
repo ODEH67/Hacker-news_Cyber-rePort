@@ -15,7 +15,6 @@ function App() {
   //I am not sure we will need the setPosts, we can get the data we need directly from the data sent by the fetch
   const [posts, setPosts] = useState([])
   const DataFetch = async () => {
-
 		try {
 			const response = await fetch(
 				"http://hn.algolia.com/api/v1/search?query=*"
@@ -29,12 +28,12 @@ function App() {
 			const data = await response.json();
       setLoading(false)
 			console.log("data", data);
-      //setPosts(data)
+      setPosts(data.hits)
 		} catch (error) {
 			console.log(error.message);
 		}
 
-    //console.log('posts',posts)
+    console.log('posts',posts)
   
 	};
 
@@ -45,11 +44,11 @@ function App() {
 
   return (
     <>
-    {loading ? <HashLoader color="#ff6600" cssOverride={{}} loading size={50} /> : 
+    {loading ? <HashLoader color="#ff6600" cssOverride={{margin: "10rem auto"}} loading size={50} /> : 
     <>
     <Header/>
     <Routes>
-      <Route path='/' element={<MainPage/>}/>
+      <Route path='/' element={<MainPage posts={posts} />}/>
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='*' element={<h1 className='not-found'>Error 404 Not Found</h1>}/>
     </Routes></>}
