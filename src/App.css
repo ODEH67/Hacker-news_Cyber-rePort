@@ -59,7 +59,7 @@ nav li {
 
 .small-text {
     font-family: Verdana, Geneva, sans-serif;
-    font-size: 10pt;
+    font-size: 8pt;
     color: #828282;
 }
 
@@ -72,10 +72,33 @@ nav li {
   margin: 5rem auto;
 }
 
+.post-div {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .5rem;
+}
+
+.number-upvote {
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  color: #828282;
+}
+
+.arrow-up {
+  font-size: 20px;
+}
+
 @media only screen and (max-width: 750px) {
 
   .title {
       font-size: 11pt;
       line-height: 14pt;
+  }
+
+  .small-text {
+    font-size: 10pt;
+  
   }
 }
