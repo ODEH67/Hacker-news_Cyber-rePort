@@ -17,7 +17,7 @@ function App() {
   const DataFetch = async () => {
 		try {
 			const response = await fetch(
-				"http://hn.algolia.com/api/v1/search?query=*"
+				"http://hn.algolia.com/api/v1/search?query=*&hitsPerPage=40&page=4"
 			);
 			//console.log(response);
 

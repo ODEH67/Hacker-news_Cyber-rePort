@@ -53,18 +53,19 @@ nav li {
   cursor: pointer;
 }
 
-.search-span {
-  /* color:#828282; */
-}
-
 .small-text {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 8pt;
     color: #828282;
 }
 
-.title {
+.title a {
+  color: unset;
+  text-decoration: none;
+}
 
+.title a:visited {
+  color: #828282;
 }
 
 .not-found {
