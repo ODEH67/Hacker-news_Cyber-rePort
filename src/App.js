@@ -44,9 +44,9 @@ function App() {
 
   return (
     <>
+    <Header/>
     {loading ? <HashLoader color="#ff6600" cssOverride={{margin: "10rem auto"}} loading size={50} /> : 
     <>
-    <Header/>
     <Routes>
       <Route path='/' element={<MainPage posts={posts} />}/>
       <Route path='/search' element={<SearchPage/>}/>
