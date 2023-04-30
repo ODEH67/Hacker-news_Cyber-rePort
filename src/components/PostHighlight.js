@@ -8,28 +8,35 @@ function PostHighlight({posts}) {
         <>
          {
             posts.map((post, idx)=> {
-                return(
+                if(post.title) {
 
-                    <div className="post-div">
-                        <div className="number-upvote">
-                            {idx +1 }.
-                            <IoMdArrowDropup className="arrow-up"/>
-                        </div>
-                        <div className="highlights">
-                            <div className="first-line">
-                                <span className="title">{post.title}</span>
-                                <span className="small-text"> ({post.url})</span>
-                            </div>
-                            <div className="second-line">
-                                <span className="small-text">{post.points} points</span>
-                                <span className="small-text"> by {post.author}</span>
-                                <span className="small-text"> X hours ago |</span>
-                                <span className="small-text"> hide |</span>
-                                <span className="small-text"> {post.num_comments} comments</span>
-                            </div>
-                        </div>
-                    </div>
-                )
+                    return (
+                                        <div className="post-div" key={idx}>
+                                            <div className="number-upvote">
+                                                {idx + 1}.
+                                                <IoMdArrowDropup className="arrow-up" />
+                                            </div>
+                                            <div className="highlights">
+                                                <div className="first-line">
+                                                    <span className="title">
+                                                        <a href={post.url}>{post.title}</a>
+                                                    </span>
+                                                    <span className="small-text"> ({post.url})</span>
+                                                </div>
+                                                <div className="second-line">
+                                                    <span className="small-text">{post.points} points</span>
+                                                    <span className="small-text"> by {post.author}</span>
+                                                    <span className="small-text"> X hours ago |</span>
+                                                    <span className="small-text"> hide |</span>
+                                                    <span className="small-text">
+                                                        {" "}
+                                                        {post.num_comments} comments
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                            );
+                }
             })
          }
          </>
