@@ -9,15 +9,16 @@ import Header from './components/Header';
 
 
 function App() {
-  //later we can pass the loading state down to mainpage and use the spinner just for that, not for the whole page
-  let [loading, setLoading] = useState(true);
-	
-  //I am not sure we will need the setPosts, we can get the data we need directly from the data sent by the fetch
-  const [posts, setPosts] = useState([])
-  const DataFetch = async () => {
+
+ 
+	let [loading, setLoading] = useState(true);
+
+	//I am not sure we will need the setPosts, we can get the data we need directly from the data sent by the fetch
+	const [posts, setPosts] = useState([]);
+	const DataFetch = async () => {
 		try {
 			const response = await fetch(
-				"http://hn.algolia.com/api/v1/search?query=*"
+				`http://hn.algolia.com/api/v1/search?query=?&hitsPerPage=30`
 			);
 			//console.log(response);
 
@@ -26,35 +27,44 @@ function App() {
 			}
 
 			const data = await response.json();
-      setLoading(false)
+			setLoading(false);
 			console.log("data", data);
-      setPosts(data.hits)
+			setPosts(data.hits);
 		} catch (error) {
 			console.log(error.message);
 		}
 
-    console.log('posts',posts)
-  
+		console.log("posts", posts);
 	};
 
-  useEffect(() => {
+	useEffect(() => {
 		DataFetch();
 	}, []);
 
-
-  return (
-    <>
-    <Header/>
-    {loading ? <HashLoader color="#ff6600" cssOverride={{margin: "10rem auto"}} loading size={50} /> : 
-    <>
-    <Routes>
-      <Route path='/' element={<MainPage posts={posts} />}/>
-      <Route path='/search' element={<SearchPage/>}/>
-      <Route path='*' element={<h1 className='not-found'>Error 404 Not Found</h1>}/>
-    </Routes></>}
-    </>
-
-  );
+	return (
+		<>
+			<Header />
+			{loading ? (
+				<HashLoader
+					color="#ff6600"
+					cssOverride={{ margin: "40vh auto" }}
+					loading
+					size={50}
+				/>
+			) : (
+				<>
+					<Routes>
+						<Route path="/" element={<MainPage posts={posts} />} />
+						<Route path="/search" element={<SearchPage />} />
+						<Route
+							path="*"
+							element={<h1 className="not-found">Error 404 Not Found</h1>}
+						/>
+					</Routes>
+				</>
+			)}
+		</>
+	);
 }
 
 export default App;
