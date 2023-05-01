@@ -25,6 +25,6 @@ margin: 1em 0em;
     font-size: 0.8em;
 }
 
-a:visited {
+.main a:visited {
     color: gray;
   }
