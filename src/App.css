@@ -57,6 +57,7 @@ nav li {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 8pt;
     color: #828282;
+  text-decoration: none /* added for the small links aside of the titles to remove the underline */
 }
 
 .title a {
