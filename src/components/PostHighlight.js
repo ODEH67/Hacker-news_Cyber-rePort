@@ -27,9 +27,10 @@ function PostHighlight({posts}) {
 												<div className="highlights">
 													<div className="first-line">
 														<span className="title">
-															<a href={post.url}>{post.title}</a>
+															<a href={post.url} target="_blank" rel="noreferrer">{post.title}</a>
 														</span>
-														<span className="small-text"> ({GetHostName(post.url)})</span>
+														{/* line 34, I made the link klickable ,and to be opened in a blank page(this also in line 30), the link underline is removed in App.css on line 60 by adding text-decoration: none, just like the original website */}
+														<a href={post.url} className="small-text" target="_blank" rel="noreferrer"> ({GetHostName(post.url)})</a>
 													</div>
 													<div className="second-line">
 														<span className="small-text">
