@@ -7,15 +7,12 @@ import Footer from "../components/Footer";
 
 function MainPage({posts}) {
 
-    useEffect(()=> {
-        
-    })
 
 	return (
 		<>
 			<div className="main">
 				{/* Hi from main page */}
-				<PostHighlight posts={posts} />
+				<PostHighlight/>
 				<Footer/>
 			</div>
 		</>

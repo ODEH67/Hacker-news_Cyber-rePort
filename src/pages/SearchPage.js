@@ -1,9 +1,17 @@
 import { Routes, Route, NavLink, Link } from "react-router-dom";
-import BasicSelect from "../components/FilterSelect";
+import PostHighlight from "../components/PostHighlight";
+import { SearchContext } from "../context/SearchContext";
+import { useContext } from "react";
+
 function SearchPage() {
-	return <div className="main">Hi from search page
-	 
-	</div>;
+
+	const { query } = useContext(SearchContext);
+	return (
+		<div className="main">
+			<h2>Search results for: {query}</h2>
+			<PostHighlight />
+		</div>
+	);
 }
 
 export default SearchPage;
