@@ -2,20 +2,20 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import CreatedAt from "./CreatedAt";
 import GetHostName from "./GetHostName";
+import { useContext } from "react";
+import {SearchContext} from "../context/SearchContext";
 
 //we have to write a function to get the X hours ago number from the timestamp
 
-function PostHighlight({posts}) {
+function PostHighlight() {
 
-   //( new Date() - new Date(post.created_at_i * 1000) ) / (1000 * 60 * 60)
-   const now = new Date()
-   let postDate 
+const { hits } = useContext(SearchContext)
 
     
     return (
         <>
          {
-            posts.map((post, idx)=> {
+            hits.map((post, idx)=> {
                 if(post.title || post.story_title) {
 
                     return (
@@ -27,10 +27,22 @@ function PostHighlight({posts}) {
 												<div className="highlights">
 													<div className="first-line">
 														<span className="title">
-															<a href={post.url} target="_blank" rel="noreferrer">{post.title}</a>
+															<a
+																href={post.url ? post.url : post.story_url}
+																target="_blank"
+																rel="noreferrer">
+																{post.title ? post.title : post.story_title}
+															</a>
 														</span>
 														{/* line 34, I made the link klickable ,and to be opened in a blank page(this also in line 30), the link underline is removed in App.css on line 60 by adding text-decoration: none, just like the original website */}
-														<a href={post.url} className="small-text" target="_blank" rel="noreferrer"> ({GetHostName(post.url)})</a>
+														<a
+															href={post.url ? post.url : post.story_url}
+															className="small-text"
+															target="_blank"
+															rel="noreferrer">
+															{" "}
+															({GetHostName(post.url)})
+														</a>
 													</div>
 													<div className="second-line">
 														<span className="small-text">
