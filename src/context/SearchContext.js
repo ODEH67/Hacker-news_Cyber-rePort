@@ -32,11 +32,11 @@ const reducer = (state, action) => {
 };
 
 const SearchContext = createContext();
- 
+
 
 
 export default function SearchContextProvider({ children }) {
-     
+
 
     const API_ENDPOINT = "https://hn.algolia.com/api/v1/search_by_date?tags=story";
 
@@ -44,7 +44,7 @@ export default function SearchContextProvider({ children }) {
 		loading: true,
 		hits: [],
 		page: 0,
-		query: "react",
+		query: "",
 		nbPages: 0,
 	};
     

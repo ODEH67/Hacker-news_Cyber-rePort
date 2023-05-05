@@ -14,7 +14,7 @@ const { hits } = useContext(SearchContext)
     
     return (
         <>
-         {
+        {
             hits.map((post, idx)=> {
                 if(post.title || post.story_title) {
 
