@@ -80,7 +80,9 @@ export default function SearchContextProvider({ children }) {
 				throw new Error(`Request failed, status: ${response.status}`);
 			}
 			const data = await response.json();
+
             console.log(data, data.hits, data.nbPages, data.page)
+
 			dispatch({
 				type: ACTIONS.SET_POSTS,
 				payload: {
@@ -88,10 +90,30 @@ export default function SearchContextProvider({ children }) {
 					nbPages: data.nbPages
 				},
 			});
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ for marking up the searched words in yellow, but it did not work as expected,<em> tags r apearing
+		//   let updatedHits = data.hits;
+		//   const searchTerm = state.query;
+		//   if (searchTerm !== "") {
+		// 	const regex = new RegExp(searchTerm, "gi");
+		// 	updatedHits = data.hits.map((hit) => {
+		// 	  const updatedTitle = hit.title.replace(regex, "<em>$&</em>");
+		// 	  return { ...hit, title: updatedTitle };
+		// 	});
+		//   }
+	  
+		//   dispatch({
+		// 	type: ACTIONS.SET_POSTS,
+		// 	payload: {
+		// 	  hits: updatedHits,
+		// 	  nbPages: data.nbPages,
+		// 	},
+		//   });
+//   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		} catch (error) {
-			console.log(error.message);
+		  console.log(error.message);
 		}
-	};
+	  };
+	  
    
 	const handleSearch = ( query ) => {
 		dispatch({ type: ACTIONS.SET_SEARCH, payload: query });

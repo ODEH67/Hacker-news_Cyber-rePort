@@ -10,6 +10,7 @@ function Header() {
 							<img
 								className="logo"
 								src="https://news.ycombinator.com/y18.gif"
+								alt=""
 							/>
 							<h1>Hacker News</h1>
 						</Link>

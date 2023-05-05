@@ -28,3 +28,21 @@ margin: 1em 0em;
 .main a:visited {
     color: gray;
   }
+
+.filter-Menus {
+display: flex;
+flex-direction: row;
+gap: 1em;
+flex-wrap: wrap;
+font-size: 1rem;
+align-items: center;
+}
+
+.filter-Menus select {
+background-color: #f6f6ef;
+font-size: 1em;
+padding: 3px;
+color: #5c5c5c;
+border-color: #c1c1c1;
+border-radius: 4px;
+}
