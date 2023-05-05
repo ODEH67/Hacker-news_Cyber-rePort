@@ -9,7 +9,7 @@ import {SearchContext} from "../context/SearchContext";
 
 function PostHighlight() {
 
-const { hits } = useContext(SearchContext)
+const { hits, page } = useContext(SearchContext)
 
     
     return (
@@ -21,7 +21,7 @@ const { hits } = useContext(SearchContext)
                     return (
 											<div className="post-div" key={uuidv4()}>
 												<div className="number-upvote">
-													{idx + 1}.
+													{page * 30 + idx + 1}.
 													<IoMdArrowDropup className="arrow-up" />
 												</div>
 												<div className="highlights">
