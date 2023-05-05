@@ -1,28 +1,28 @@
 function CreatedAt(postCreationTime) {
-	console.log(postCreationTime)
+	//console.log(postCreationTime)
     
     
     const now = Math.floor(new Date() )
-	console.log('now',now)
+	//console.log('now',now)
     const date = new Date(postCreationTime * 1000);
-	console.log('date', date)
+	//console.log('date', date)
     
     const diffInHours = (() => {
         const diffInMilliseconds = now - date;
         return diffInMilliseconds / (1000 * 60 * 60);
     })();
 
-	console.log('diff', diffInHours)
+	//console.log('diff', diffInHours)
     
     //const day = 24
     const numOfDays = Math.floor(diffInHours / 24)
-	console.log('days', numOfDays)
+	//console.log('days', numOfDays)
     const numOfWeeks = Math.floor(numOfDays / 7)
-	console.log("weeks", numOfWeeks);
+	//console.log("weeks", numOfWeeks);
     const numOfMonths = Math.floor(numOfWeeks / 4)
-	console.log("month", numOfMonths);
+	//console.log("month", numOfMonths);
     const numOfYears = Math.floor(numOfMonths / 12)
-	console.log("years", numOfYears);
+	//console.log("years", numOfYears);
 
     return timeFormatter(numOfYears, numOfMonths, numOfWeeks, numOfDays, diffInHours)
 }
@@ -59,4 +59,4 @@ const timeFormatter = (
 	}
 };
 
-console.log('THIS HERE*****************',CreatedAt(1683054783))
+//console.log('THIS HERE*****************',CreatedAt(1683054783))

@@ -5,6 +5,8 @@ const ACTIONS = {
 	SET_LOADING: "SET_LOADING",
 	SET_POSTS: "SET_POSTS",
 	SET_SEARCH: "SET_SEARCH",
+	NEXT_PAGE: "NEXT_PAGE",
+	PREV_PAGE: "PREV_PAGE"
 };
 
 const reducer = (state, action) => {
@@ -25,6 +27,24 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				query: action.payload,
+			};
+		case ACTIONS.NEXT_PAGE:
+			let nextPage = state.page + 1;
+			if (nextPage > state.nbPages - 1) {
+				nextPage = 0;
+			}
+			return {
+				...state,
+				page: nextPage
+			};
+		case ACTIONS.PREV_PAGE:
+			let prevPage = state.page - 1;
+			if (prevPage < 0) {
+				prevPage = state.nbPages -1;
+			}
+			return {
+				...state,
+				page: prevPage
 			};
 		default:
 			return state;
@@ -60,12 +80,12 @@ export default function SearchContextProvider({ children }) {
 				throw new Error(`Request failed, status: ${response.status}`);
 			}
 			const data = await response.json();
-            console.log(data, data.hits, data.nbPages)
+            console.log(data, data.hits, data.nbPages, data.page)
 			dispatch({
 				type: ACTIONS.SET_POSTS,
 				payload: {
 					hits: data.hits,
-					nbPages: data.nbPages,
+					nbPages: data.nbPages
 				},
 			});
 		} catch (error) {
@@ -77,12 +97,20 @@ export default function SearchContextProvider({ children }) {
 		dispatch({ type: ACTIONS.SET_SEARCH, payload: query });
 	};
 
+	const handleNextPage = () => {
+		dispatch({type: ACTIONS.NEXT_PAGE})
+	}
+
+	const handlePrevPage = () => {
+		dispatch({ type: ACTIONS.PREV_PAGE });
+	};
+
 	useEffect(() => {
-			DataFetch(`${API_ENDPOINT}&query=${state.query}&hitsPerPage=30`);
+			DataFetch(`${API_ENDPOINT}&query=${state.query}&page=${state.page}&hitsPerPage=20`);
 		}, [state.query, state.page]);
 
 	return (
-		<SearchContext.Provider value={{ ...state, handleSearch}}>
+		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage}}>
 			{children}
 		</SearchContext.Provider>
 	);
