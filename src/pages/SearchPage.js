@@ -3,6 +3,7 @@ import PostHighlight from "../components/PostHighlight";
 import FilterMenus from "../components/FilterMenus";
 import { SearchContext } from "../context/SearchContext";
 import { useContext } from "react";
+import  Pagination  from "../components/Pagination";
 
 function SearchPage() {
 
@@ -12,6 +13,7 @@ function SearchPage() {
 			<FilterMenus/>
 			<h2>Search results for: {query}</h2>
 			<PostHighlight />
+			<Pagination/>
 		</div>
 	);
 }
