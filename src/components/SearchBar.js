@@ -11,14 +11,18 @@ function SearchBar() {
     const navigate = useNavigate()
 
     const handleSearchFunction = (e) => {
-        if(e.key === 'Enter') {
+         if(e.key === 'Enter') {          //this will take us to the search page directly to avoid the disappearing search text when hitting 
             navigate('/search')
         } 
     }
     
+    const  handelSubmit = (e) => {
+        e.preventDefault();
+    }
+
     return (
 		<>
-        <form>
+        <form onSubmit={handelSubmit}>
 			<span className="search-span">Search: </span>
 			<input type="text" value={query} onChange={(e)=> handleSearch(e.target.value)} onKeyDown={handleSearchFunction}/>
         </form>

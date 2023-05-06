@@ -4,23 +4,24 @@ import { SearchContext } from '../context/SearchContext';
 
 export default function FilterMenus (){
 
-    const { setFilterType, setSortBy, setCustomTimeframe } = useContext(SearchContext);
+    const { handlePopularity,handlePastWeek ,handleDate,hits } = useContext(SearchContext);
     const [filter, setFilter] = useState('All');
     const [sorting, setSorting] = useState('Popularity');
     const [timeframe, setTimeframe] = useState('All time');
 
-    // useEffect(() => {
-    //     setFilterType(filter);
-    // }, []);
-    
-    // useEffect(() => {
-    //     setSortBy(sorting);
-    // }, []);
-    
-    // useEffect(() => {
-    //     setCustomTimeframe(timeframe);
-    // }, []);
-    
+console.log("hits in filtermenu",hits)
+    useEffect(() => {
+        if (sorting === 'Popularity') {
+            handlePopularity();
+        
+        } else if (sorting === 'Date'){
+            handleDate();
+        
+        } else if (filter === 'Past Week'){
+            handlePastWeek();
+        }
+    }, [sorting,filter,timeframe]);
+
 
 return (
     <div className="filter-Menus">
