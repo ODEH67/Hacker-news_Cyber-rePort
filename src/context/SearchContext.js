@@ -6,7 +6,17 @@ const ACTIONS = {
 	SET_POSTS: "SET_POSTS",
 	SET_SEARCH: "SET_SEARCH",
 	NEXT_PAGE: "NEXT_PAGE",
-	PREV_PAGE: "PREV_PAGE"
+	PREV_PAGE: "PREV_PAGE",
+	GO_TO_FIRST_PAGE: "GO_TO_FIRST_PAGE",		//added go to first page , when it been clicked on the logo
+
+	STORIES_FILTER: "STORIES_FILTER",
+	COMMENTS_FILTER: "COMMENTS_FILTER",
+	POPULARITY_FILTER: "POPULARITY_FILTER",
+	DATE_FILTER: "DATE_FILTER",
+	LAST_24_H_FILTER: "LAST_24_H_FILTER",
+	PAST_WEEK_FILTER: "PAST_WEEK_FILTER",
+	PAST_MONTH_FILTER: "PAST_MONTH_FILTER",
+	PAST_YEAR_FILTER: "PAST_YEAR_FILTER",
 };
 
 const reducer = (state, action) => {
@@ -46,26 +56,53 @@ const reducer = (state, action) => {
 				...state,
 				page: prevPage
 			};
+			case ACTIONS.GO_TO_FIRST_PAGE:			//added go to first page , when it been clicked on the logo
+				return {
+				...state,
+				page: 0
+				};
+
+				case ACTIONS.POPULARITY_FILTER:												//testing popularity filter
+					const sortedHits = state.hits.sort((a, b) => b.points - a.points);
+					return {
+					...state,
+					hits: sortedHits
+				};
+
+				case ACTIONS.DATE_FILTER:												//testing Date filter
+
+					return {
+						...state,
+						
+					}
+
+				case ACTIONS.PAST_WEEK_FILTER:												//testing PAST_WEEK filter
+
+					return {
+						...state,
+				};
+
 		default:
 			return state;
 	}
 };
 
 const SearchContext = createContext();
- 
+
 
 
 export default function SearchContextProvider({ children }) {
-     
 
-    const API_ENDPOINT = "https://hn.algolia.com/api/v1/search_by_date?tags=story";
+
+    const API_ENDPOINT = "https://hn.algolia.com/api/v1/search_by_date?";
 
 	const initialState = {
 		loading: true,
 		hits: [],
 		page: 0,
-		query: "react",
+		query: "",
 		nbPages: 0,
+		tags: "story",
 	};
     
 
@@ -81,7 +118,11 @@ export default function SearchContextProvider({ children }) {
 			}
 			const data = await response.json();
 
-            console.log(data, data.hits, data.nbPages, data.page)
+            console.log("data",data)
+			console.log("data.hits",data.hits)
+			console.log("data.nbPages", data.nbPages)
+			console.log("data.page", data.page)
+			console.log("data.nbHits", data.nbHits)
 
 			dispatch({
 				type: ACTIONS.SET_POSTS,
@@ -100,7 +141,7 @@ export default function SearchContextProvider({ children }) {
 		// 	  return { ...hit, title: updatedTitle };
 		// 	});
 		//   }
-	  
+
 		//   dispatch({
 		// 	type: ACTIONS.SET_POSTS,
 		// 	payload: {
@@ -110,11 +151,11 @@ export default function SearchContextProvider({ children }) {
 		//   });
 //   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		} catch (error) {
-		  console.log(error.message);
+		console.log(error.message);
 		}
-	  };
-	  
-   
+	};
+	
+
 	const handleSearch = ( query ) => {
 		dispatch({ type: ACTIONS.SET_SEARCH, payload: query });
 	};
@@ -127,12 +168,29 @@ export default function SearchContextProvider({ children }) {
 		dispatch({ type: ACTIONS.PREV_PAGE });
 	};
 
+	const handleGoToFirstPage = () => {					//added go to first page , when it been clicked on the logo
+		dispatch({ type: ACTIONS.GO_TO_FIRST_PAGE });
+	}
+
+	const handlePopularity = () => {					//testing popularity filter
+		dispatch({ type: ACTIONS.POPULARITY_FILTER });
+		
+	};
+	const handlePastWeek = () => {						//testing PastWeek filter
+		dispatch({ type: ACTIONS.PAST_WEEK_FILTER });
+		
+	};
+	const handleDate = () => {							//testing Date filter
+		dispatch({ type: ACTIONS.DATE_FILTER });
+		
+	};
+
 	useEffect(() => {
-			DataFetch(`${API_ENDPOINT}&query=${state.query}&page=${state.page}&hitsPerPage=20`);
+		DataFetch(`${API_ENDPOINT}tags=${state.tags}&query=${state.query}&page=${state.page}&hitsPerPage=20`);
 		}, [state.query, state.page]);
 
 	return (
-		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage}}>
+		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage, handleGoToFirstPage,handlePopularity,handlePastWeek,handleDate}}>
 			{children}
 		</SearchContext.Provider>
 	);
@@ -140,3 +198,20 @@ export default function SearchContextProvider({ children }) {
 export { SearchContext, SearchContextProvider };
 
 //https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=50
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//https://hn.algolia.com/api/v1/search_by_date?query={query}&page=${state.page}&hitsPerPage=20 		Standard API
+
+//by adding those at the end of the link as a string throught functions, to manipulate the filtering:
+
+//&tags={(story,comment)} 	  	sort All  (or without adding at all)
+//&tags=story					sort stories
+//&tags=comment					sort comments
+
+/*https://hn.algolia.com/api/v1/search?query={query}&page=${state.page}&hitsPerPage=20		sorting by popularity depending on points and num of comments
+&numericFilters=points&numericFilters=num_comments*/
+
+//								sorting by All time (adding nothing)
+//&numericFilters=created_at_i	sorting by specific time (already defined in the api for example 1683375198)

@@ -45,4 +45,9 @@ padding: 3px;
 color: #5c5c5c;
 border-color: #c1c1c1;
 border-radius: 4px;
+cursor: pointer;
+}
+
+.filter-Menus select option {
+    cursor: pointer;
 }
