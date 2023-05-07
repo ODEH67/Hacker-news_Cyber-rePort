@@ -15,10 +15,14 @@ function SearchBar() {
             navigate('/search')
         } 
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
     
     return (
 		<>
-        <form>
+        <form onSubmit={handleSubmit}>
 			<span className="search-span">Search: </span>
 			<input type="text" value={query} onChange={(e)=> handleSearch(e.target.value)} onKeyDown={handleSearchFunction}/>
         </form>
