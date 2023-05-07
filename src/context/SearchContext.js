@@ -63,10 +63,10 @@ const reducer = (state, action) => {
 				};
 
 				case ACTIONS.POPULARITY_FILTER:												//testing popularity filter
-					const sortedHits = state.hits.sort((a, b) => b.points - a.points);
+					// const sortedHits = state.hits.sort((a, b) => b.points - a.points);
 					return {
 					...state,
-					hits: sortedHits
+					// hits: sortedHits
 				};
 
 				case ACTIONS.DATE_FILTER:												//testing Date filter
@@ -94,7 +94,6 @@ const SearchContext = createContext();
 export default function SearchContextProvider({ children }) {
 
 
-    const API_ENDPOINT = "https://hn.algolia.com/api/v1/search_by_date?";
 
 	const initialState = {
 		loading: true,
@@ -102,7 +101,8 @@ export default function SearchContextProvider({ children }) {
 		page: 0,
 		query: "",
 		nbPages: 0,
-		tags: "story",
+		tags: "tags=story",
+		by_date_points: "search_by_date?",
 	};
     
 
@@ -185,8 +185,10 @@ export default function SearchContextProvider({ children }) {
 		
 	};
 
+	const API_ENDPOINT = `https://hn.algolia.com/api/v1/${state.by_date_points}`;
+
 	useEffect(() => {
-		DataFetch(`${API_ENDPOINT}tags=${state.tags}&query=${state.query}&page=${state.page}&hitsPerPage=20`);
+		DataFetch(`${API_ENDPOINT}${state.tags}&query=${state.query}&page=${state.page}&hitsPerPage=30`);
 		}, [state.query, state.page]);
 
 	return (

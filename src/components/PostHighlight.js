@@ -9,6 +9,7 @@ import {SearchContext} from "../context/SearchContext";
 
 function PostHighlight() {
 
+
 const { hits, page } = useContext(SearchContext)
 
     
