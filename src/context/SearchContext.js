@@ -56,11 +56,11 @@ const reducer = (state, action) => {
 				...state,
 				page: prevPage
 			};
-			case ACTIONS.GO_TO_FIRST_PAGE:			//added go to first page , when it been clicked on the logo
-				return {
-				...state,
-				page: 0
-				};
+			// case ACTIONS.GO_TO_FIRST_PAGE:			//added go to first page , when it been clicked on the logo
+			// 	return {								// commented this out because the logo was already clickable and was taking the user back to main page
+			// 	...state,
+			// 	page: 0
+			// 	};
 
 				case ACTIONS.POPULARITY_FILTER:												//testing popularity filter
 					const sortedHits = state.hits.sort((a, b) => b.points - a.points);
@@ -118,11 +118,11 @@ export default function SearchContextProvider({ children }) {
 			}
 			const data = await response.json();
 
-            console.log("data",data)
-			console.log("data.hits",data.hits)
-			console.log("data.nbPages", data.nbPages)
-			console.log("data.page", data.page)
-			console.log("data.nbHits", data.nbHits)
+            //console.log("data",data)
+			//console.log("data.hits",data.hits)
+			//console.log("data.nbPages", data.nbPages)
+			//console.log("data.page", data.page)
+			//console.log("data.nbHits", data.nbHits)
 
 			dispatch({
 				type: ACTIONS.SET_POSTS,

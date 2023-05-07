@@ -6,6 +6,7 @@ import  Pagination  from "../components/Pagination";
 
 
 
+
 function MainPage({posts}) {
 
 
