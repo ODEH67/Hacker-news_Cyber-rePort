@@ -9,14 +9,17 @@ const ACTIONS = {
 	PREV_PAGE: "PREV_PAGE",
 	GO_TO_FIRST_PAGE: "GO_TO_FIRST_PAGE",		//added go to first page , when it been clicked on the logo
 
+	ALL_FILTER: "ALL_FILTER",
 	STORIES_FILTER: "STORIES_FILTER",
 	COMMENTS_FILTER: "COMMENTS_FILTER",
 	POPULARITY_FILTER: "POPULARITY_FILTER",
 	DATE_FILTER: "DATE_FILTER",
-	LAST_24_H_FILTER: "LAST_24_H_FILTER",
-	PAST_WEEK_FILTER: "PAST_WEEK_FILTER",
-	PAST_MONTH_FILTER: "PAST_MONTH_FILTER",
-	PAST_YEAR_FILTER: "PAST_YEAR_FILTER",
+	RESET_PAGE: "RESET_PAGE",
+	LAST_PAGE: "LAST_PAGE",
+	// LAST_24_H_FILTER: "LAST_24_H_FILTER",
+	// PAST_WEEK_FILTER: "PAST_WEEK_FILTER",
+	// PAST_MONTH_FILTER: "PAST_MONTH_FILTER",
+	// PAST_YEAR_FILTER: "PAST_YEAR_FILTER",
 };
 
 const reducer = (state, action) => {
@@ -56,30 +59,69 @@ const reducer = (state, action) => {
 				...state,
 				page: prevPage
 			};
-			// case ACTIONS.GO_TO_FIRST_PAGE:			//added go to first page , when it been clicked on the logo
-			// 	return {								// commented this out because the logo was already clickable and was taking the user back to main page
-			// 	...state,
-			// 	page: 0
-			// 	};
-
-				case ACTIONS.POPULARITY_FILTER:												//testing popularity filter
-					const sortedHits = state.hits.sort((a, b) => b.points - a.points);
-					return {
-					...state,
-					hits: sortedHits
+			case ACTIONS.GO_TO_FIRST_PAGE:				//added go to first page , when it been clicked on the logo
+				return {								// commented this out because the logo was already clickable and was taking the user back to main page
+				...state,								// but the reason of adding this is because of the pagination to reset to the first page when browsing through many pages of the 35 pages
+				query: "",
+				query_reset : "",
+				by_date_points: "https://hn.algolia.com/api/v1/search_by_date?",
+				sectiony: 'Stories',
+				sort: 'Date',
+				tags: "tags=story&",
 				};
 
-				case ACTIONS.DATE_FILTER:												//testing Date filter
+				case ACTIONS.LAST_PAGE:												//working LAST_PAGE filter
+					// const sortedHits = state.hits.sort((a, b) => b.points - a.points);
+					return {
+					...state,
+					page : state.nbPages -1
+				};
+
+				case ACTIONS.RESET_PAGE:												//working RESET_PAGE
+
+					return {
+					...state,
+					page: 0,
+				};
+
+				case ACTIONS.POPULARITY_FILTER:												//working popularity filter
+					// const sortedHits = state.hits.sort((a, b) => b.points - a.points);
+					return {
+					...state,
+					sort: 'Popularity',
+					by_date_points: "https://hn.algolia.com/api/v1/search?"
+				};
+
+				case ACTIONS.DATE_FILTER:													//working Date filter
 
 					return {
 						...state,
-						
+						sort: "Date",
+						by_date_points: "https://hn.algolia.com/api/v1/search_by_date?"
 					}
 
-				case ACTIONS.PAST_WEEK_FILTER:												//testing PAST_WEEK filter
+				case ACTIONS.STORIES_FILTER:												//working STORIES_FILTER filter
 
 					return {
 						...state,
+						sectiony: 'Stories',
+						tags: "tags=story&",
+				};
+
+				case ACTIONS.COMMENTS_FILTER:												//working COMMENTS_FILTER filter
+
+					return {
+						...state,
+						sectiony: 'Comments',
+						tags: "tags=comment&",
+				};
+
+				case ACTIONS.ALL_FILTER:												//working ALL_FILTER filter
+
+					return {
+						...state,
+						sectiony: 'All',
+						tags: "tags=(comment,story)&",
 				};
 
 		default:
@@ -89,12 +131,8 @@ const reducer = (state, action) => {
 
 const SearchContext = createContext();
 
-
-
 export default function SearchContextProvider({ children }) {
 
-
-    const API_ENDPOINT = "https://hn.algolia.com/api/v1/search_by_date?";
 
 	const initialState = {
 		loading: true,
@@ -102,7 +140,11 @@ export default function SearchContextProvider({ children }) {
 		page: 0,
 		query: "",
 		nbPages: 0,
-		tags: "story",
+		query_reset : "",
+		tags: "tags=story&",
+		by_date_points: "https://hn.algolia.com/api/v1/search_by_date?",
+		sort: 'Date',
+		sectiony: 'Stories',
 	};
     
 
@@ -118,11 +160,11 @@ export default function SearchContextProvider({ children }) {
 			}
 			const data = await response.json();
 
-            //console.log("data",data)
-			//console.log("data.hits",data.hits)
-			//console.log("data.nbPages", data.nbPages)
-			//console.log("data.page", data.page)
-			//console.log("data.nbHits", data.nbHits)
+            // console.log("data",data)
+			// //console.log("data.hits",data.hits)
+			// //console.log("data.nbPages", data.nbPages)
+			// //console.log("data.page", data.page)
+			// //console.log("data.nbHits", data.nbHits)
 
 			dispatch({
 				type: ACTIONS.SET_POSTS,
@@ -131,6 +173,7 @@ export default function SearchContextProvider({ children }) {
 					nbPages: data.nbPages
 				},
 			});
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ for marking up the searched words in yellow, but it did not work as expected,<em> tags r apearing
 		//   let updatedHits = data.hits;
 		//   const searchTerm = state.query;
@@ -168,29 +211,49 @@ export default function SearchContextProvider({ children }) {
 		dispatch({ type: ACTIONS.PREV_PAGE });
 	};
 
-	const handleGoToFirstPage = () => {					//added go to first page , when it been clicked on the logo
+	const handelResetPage = () => {
+		dispatch({ type: ACTIONS.RESET_PAGE });			//BACK to first page for PAGINATION 
+	};
+	
+	const handelLastPage = () => {
+		dispatch({ type: ACTIONS.LAST_PAGE });		 //go to last page for PAGINATION 
+	};
+
+	const handleGoToHome = () => {					//added reseting the search & filters, when it been clicked on the logo
 		dispatch({ type: ACTIONS.GO_TO_FIRST_PAGE });
 	}
 
-	const handlePopularity = () => {					//testing popularity filter
+	const handlePopularity = () => {					//WORKING popularity filter
 		dispatch({ type: ACTIONS.POPULARITY_FILTER });
 		
 	};
-	const handlePastWeek = () => {						//testing PastWeek filter
-		dispatch({ type: ACTIONS.PAST_WEEK_FILTER });
-		
-	};
-	const handleDate = () => {							//testing Date filter
+
+	const handleDate = () => {							//WORKING Date filter
 		dispatch({ type: ACTIONS.DATE_FILTER });
 		
 	};
 
+	const handleStories = () => {						//WORKING STORIES filter
+		dispatch({ type: ACTIONS.STORIES_FILTER });
+		
+	};
+
+	const handleComments = () => {						//WORKING Comments filter
+		dispatch({ type: ACTIONS.COMMENTS_FILTER });
+		
+	};
+
+	const handleAll = () => {						//WORKING ALL filter
+		dispatch({ type: ACTIONS.ALL_FILTER });
+	};
+
+
 	useEffect(() => {
-		DataFetch(`${API_ENDPOINT}tags=${state.tags}&query=${state.query}&page=${state.page}&hitsPerPage=20`);
-		}, [state.query, state.page]);
+		DataFetch(`${state.by_date_points}${state.tags}query=${state.query}&page=${state.page}&hitsPerPage=30`);		// Pages are now 30 instead of 20, because there was a wierd
+		}, [state.query, state.page,state.by_date_points,state.tags]);														// skipping with the pagination, about 10 pages were missing
 
 	return (
-		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage, handleGoToFirstPage,handlePopularity,handlePastWeek,handleDate}}>
+		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage, handleGoToHome,handlePopularity,handleDate,handleComments,handleStories,handleAll,handelResetPage,handelLastPage}}>
 			{children}
 		</SearchContext.Provider>
 	);

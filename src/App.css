@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.header-right {
+  cursor: pointer;
+  font-weight: bold;
+}
 nav {
   display: flex;
   align-items: center;
@@ -117,6 +121,19 @@ h2.no-result {
   border-radius: 3px;
   background: transparent;
   color: #ff6600;
+  cursor: pointer;
+}
+
+.header-right input {
+  width: 20rem;
+  height:1.5rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .header-right input {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 750px) {

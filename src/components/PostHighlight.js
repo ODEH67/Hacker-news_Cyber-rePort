@@ -10,8 +10,8 @@ import {SearchContext} from "../context/SearchContext";
 function PostHighlight() {
 
 const { hits, page, query } = useContext(SearchContext)
+console.log("hits",hits)
 
-    
     return (
         <>
 		{hits.length === 0 ? <h2 className="no-result">Sorry, nothing matches this query</h2> : null}
@@ -72,8 +72,8 @@ const { hits, page, query } = useContext(SearchContext)
 										);
                 }
             })
-         }
-         </>
+        }
+        </>
 	);
 }
 

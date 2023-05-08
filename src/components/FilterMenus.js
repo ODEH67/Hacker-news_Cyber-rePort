@@ -4,12 +4,13 @@ import { SearchContext } from '../context/SearchContext';
 
 export default function FilterMenus (){
 
-    const { handlePopularity,handlePastWeek ,handleDate,hits } = useContext(SearchContext);
-    const [filter, setFilter] = useState('All');
-    const [sorting, setSorting] = useState('Popularity');
-    const [timeframe, setTimeframe] = useState('All time');
+    const { handlePopularity,handleDate, handleStories ,handleComments, handleAll,sectiony, sort} = useContext(SearchContext);
+    const [section, setSection] = useState(sectiony);
+    const [sorting, setSorting] = useState(sort);
+    // const [timeframe, setTimeframe] = useState('All time');
 
-console.log("hits in filtermenu",hits)
+console.log("sectiony in FilterMenus",sectiony)
+console.log("sort in FilterMenus",sort)
     useEffect(() => {
         if (sorting === 'Popularity') {
             handlePopularity();
@@ -17,21 +18,29 @@ console.log("hits in filtermenu",hits)
         } else if (sorting === 'Date'){
             handleDate();
         
-        } else if (filter === 'Past Week'){
-            handlePastWeek();
+        } 
+        if (section === 'Stories'){
+            handleStories();
+        
+        } else if (section === 'Comments'){
+            handleComments();
+        
+        } else if (section === 'All'){
+            handleAll();
         }
-    }, [sorting,filter,timeframe]);
+
+    }, [sorting,section]);
 
 
 return (
     <div className="filter-Menus">
         <div>
-            <label htmlFor="filter">Search: </label>
+            <label htmlFor="section">Search: </label>
             <select
-            name="filter"
-            id="filter"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            name="section"
+            id="section"
+            value={section}
+            onChange={(e) => setSection(e.target.value)}
             >
                 <option value="All">All</option>
                 <option value="Stories">Stories</option>
@@ -50,7 +59,7 @@ return (
                 <option value="Date">Date</option>
             </select>
         </div>
-        <div>
+        {/* <div>
             <label htmlFor="timeframe">for: </label>
             <select
             name="timeframe"
@@ -65,7 +74,7 @@ return (
                 <option value="Past Year">Past Year</option>
                 <option value="Custom">Custom range</option>
             </select>
-        </div>
+        </div> */}
     </div>
     );
 };
