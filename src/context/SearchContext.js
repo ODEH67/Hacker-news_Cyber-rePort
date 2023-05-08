@@ -56,30 +56,44 @@ const reducer = (state, action) => {
 				...state,
 				page: prevPage
 			};
-			// case ACTIONS.GO_TO_FIRST_PAGE:			//added go to first page , when it been clicked on the logo
-			// 	return {								// commented this out because the logo was already clickable and was taking the user back to main page
-			// 	...state,
-			// 	page: 0
-			// 	};
+			case ACTIONS.GO_TO_FIRST_PAGE:				//added go to first page , when it been clicked on the logo
+				return {								// commented this out because the logo was already clickable and was taking the user back to main page
+				...state,								// but the reason of adding this is because of the pagination to reset to the first page when browsing through many pages of the 35 pages
+				page: 0,
+				query: "",
+				by_date_points: "https://hn.algolia.com/api/v1/search_by_date?"
+				};
 
 				case ACTIONS.POPULARITY_FILTER:												//testing popularity filter
 					// const sortedHits = state.hits.sort((a, b) => b.points - a.points);
 					return {
 					...state,
-					// hits: sortedHits
+					sort: 'Popularity',
+					by_date_points: "https://hn.algolia.com/api/v1/search?"
 				};
 
 				case ACTIONS.DATE_FILTER:												//testing Date filter
 
 					return {
 						...state,
-						
+						sort: "Date",
+						by_date_points: "https://hn.algolia.com/api/v1/search_by_date?"
 					}
 
-				case ACTIONS.PAST_WEEK_FILTER:												//testing PAST_WEEK filter
+				case ACTIONS.STORIES_FILTER:												//testing STORIES_FILTER filter
 
 					return {
 						...state,
+						sectiony: 'Stories',
+						tags: "tags=story&",
+				};
+
+				case ACTIONS.COMMENTS_FILTER:												//testing COMMENTS_FILTER filter
+
+					return {
+						...state,
+						sectiony: 'Comments',
+						tags: "tags=comment&",
 				};
 
 		default:
@@ -89,10 +103,7 @@ const reducer = (state, action) => {
 
 const SearchContext = createContext();
 
-
-
 export default function SearchContextProvider({ children }) {
-
 
 
 	const initialState = {
@@ -101,8 +112,10 @@ export default function SearchContextProvider({ children }) {
 		page: 0,
 		query: "",
 		nbPages: 0,
-		tags: "tags=story",
-		by_date_points: "search_by_date?",
+		tags: "tags=story&",
+		by_date_points: "https://hn.algolia.com/api/v1/search_by_date?",
+		sort: 'Popularity',
+		sectiony: 'Stories',
 	};
     
 
@@ -168,31 +181,37 @@ export default function SearchContextProvider({ children }) {
 		dispatch({ type: ACTIONS.PREV_PAGE });
 	};
 
-	const handleGoToFirstPage = () => {					//added go to first page , when it been clicked on the logo
+	const handleGoToFirstPage = () => {					//added go BACK to first page for PAGINATION , when it been clicked on the logo
 		dispatch({ type: ACTIONS.GO_TO_FIRST_PAGE });
 	}
 
-	const handlePopularity = () => {					//testing popularity filter
+	const handlePopularity = () => {					//WORKING popularity filter
 		dispatch({ type: ACTIONS.POPULARITY_FILTER });
 		
 	};
-	const handlePastWeek = () => {						//testing PastWeek filter
-		dispatch({ type: ACTIONS.PAST_WEEK_FILTER });
-		
-	};
-	const handleDate = () => {							//testing Date filter
+
+	const handleDate = () => {							//WORKING Date filter
 		dispatch({ type: ACTIONS.DATE_FILTER });
 		
 	};
 
-	const API_ENDPOINT = `https://hn.algolia.com/api/v1/${state.by_date_points}`;
+	const handleStories = () => {						//testing STORIES filter
+		dispatch({ type: ACTIONS.STORIES_FILTER });
+		
+	};
+
+	const handleComments = () => {						//testing Comments filter
+		dispatch({ type: ACTIONS.COMMENTS_FILTER });
+		
+	};
+
 
 	useEffect(() => {
-		DataFetch(`${API_ENDPOINT}${state.tags}&query=${state.query}&page=${state.page}&hitsPerPage=30`);
-		}, [state.query, state.page]);
+		DataFetch(`${state.by_date_points}${state.tags}query=${state.query}&page=${state.page}&hitsPerPage=30`);		// Pages are now 30 instead of 20, because there was a wierd
+		}, [state.query, state.page,state.by_date_points,state.tags]);														// skipping with the pagination, about 10 pages were missing
 
 	return (
-		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage, handleGoToFirstPage,handlePopularity,handlePastWeek,handleDate}}>
+		<SearchContext.Provider value={{ ...state, handleSearch, handleNextPage, handlePrevPage, handleGoToFirstPage,handlePopularity,handleDate,handleComments,handleStories}}>
 			{children}
 		</SearchContext.Provider>
 	);

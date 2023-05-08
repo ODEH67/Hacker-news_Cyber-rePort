@@ -6,14 +6,14 @@ import { SearchContext } from "../context/SearchContext";
 
 function Header() {
 
-	//const {handleGoToFirstPage} = useContext(SearchContext)
+	const {handleGoToFirstPage} = useContext(SearchContext)
 
     return (
 			<div className="header">
 				<div className="header-left">
 					<div className="logo-div">
 						{/* //added onClick to go back to first page */}
-						<Link className="logo-div" to='/' >		
+						<Link className="logo-div" to='/' onClick={handleGoToFirstPage} >		
 							<img
 								className="logo"
 								src="https://news.ycombinator.com/y18.gif"
