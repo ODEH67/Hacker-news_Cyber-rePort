@@ -9,12 +9,12 @@ import {SearchContext} from "../context/SearchContext";
 
 function PostHighlight() {
 
+const { hits, page, query } = useContext(SearchContext)
 
-const { hits, page } = useContext(SearchContext)
 
-    
     return (
         <>
+		{hits.length === 0 ? <h2 className="no-result">Sorry, nothing matches this query</h2> : null}
         {
             hits.map((post, idx)=> {
                 if(post.title || post.story_title || post.comment_text) {
@@ -72,9 +72,9 @@ const { hits, page } = useContext(SearchContext)
 										);
                 }
             })
-         }
-         </>
-		);
+        }
+        </>
+	);
 }
 
 export default PostHighlight;
