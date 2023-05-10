@@ -33,7 +33,9 @@ console.log("hits",hits)
 																href={post.url ? post.url : post.story_url}
 																target="_blank"
 																rel="noreferrer">
-																{post.title ? post.title : post.story_title}
+																{/* replaced the post.title after the question mark ? with the div below */}
+																{/* {post.title ? post.title : post.story_title} */}
+																{post.title ? <div dangerouslySetInnerHTML={{ __html: post.title }} />  : post.story_title} 
 																{post.comment_text && parse(post.comment_text)}
 															</a>
 														</span>
