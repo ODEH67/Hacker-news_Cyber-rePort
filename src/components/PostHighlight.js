@@ -4,6 +4,7 @@ import CreatedAt from "./CreatedAt";
 import GetHostName from "./GetHostName";
 import { useContext } from "react";
 import {SearchContext} from "../context/SearchContext";
+const parse = require("html-react-parser");
 
 //we have to write a function to get the X hours ago number from the timestamp
 
@@ -33,7 +34,7 @@ console.log("hits",hits)
 																target="_blank"
 																rel="noreferrer">
 																{post.title ? post.title : post.story_title}
-																{post.comment_text}
+																{post.comment_text && parse(post.comment_text)}
 															</a>
 														</span>
 														{/* line 34, I made the link klickable ,and to be opened in a blank page(this also in line 30), the link underline is removed in App.css on line 60 by adding text-decoration: none, just like the original website */}
@@ -43,13 +44,19 @@ console.log("hits",hits)
 															target="_blank"
 															rel="noreferrer">
 															{" "}
-															({GetHostName(post.url) ? GetHostName(post.url) : GetHostName(post.story_url) })
+															(
+															{GetHostName(post.url)
+																? GetHostName(post.url)
+																: GetHostName(post.story_url)}
+															)
 														</a>
 													</div>
 													<div className="second-line">
-														{ post.points ? <span className="small-text">
-															{post.points} points
-														</span> : null}
+														{post.points ? (
+															<span className="small-text">
+																{post.points} points
+															</span>
+														) : null}
 														<span className="small-text">
 															{" "}
 															by {post.author}
@@ -59,13 +66,14 @@ console.log("hits",hits)
 															{CreatedAt(post.created_at_i)}
 														</span>
 														<span className="small-text"> hide |</span>
-														{ post.num_comments  ? <span className="small-text">
-															{" "}
-															{post.num_comments} comments
-														</span> :  <span className="small-text">
-															{" "}
-															0 comments
-														</span>}
+														{post.num_comments ? (
+															<span className="small-text">
+																{" "}
+																{post.num_comments} comments
+															</span>
+														) : (
+															<span className="small-text"> 0 comments</span>
+														)}
 													</div>
 												</div>
 											</div>
