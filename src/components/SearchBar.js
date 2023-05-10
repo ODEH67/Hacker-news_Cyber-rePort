@@ -1,6 +1,6 @@
 import { Routes, Route, NavLink, Link, useNavigate,useLocation  } from "react-router-dom";
 import { SearchContext } from "../context/SearchContext";
-import { useContext,useState,useEffect } from "react";
+import { useContext,useState,useEffect, useRef } from "react";
 
 function SearchBar() {
 
@@ -9,9 +9,9 @@ function SearchBar() {
     //maybe, I'm not sure, this is just a note
     const [home_Query, setHome_Query]= useState(query_reset)
 
-    
     const navigate = useNavigate();
     const location = useLocation();
+    const refFocus = useRef();
 
 
     // console.log("home_Query",home_Query)
@@ -25,6 +25,7 @@ function SearchBar() {
 
     useEffect(() => {
         if (location.pathname === "/search") {
+            refFocus.current.focus()
             handleSearch(home_Query);
             console.log("location.pathname",location.pathname)}
     }, [location,home_Query]);
@@ -39,7 +40,12 @@ function SearchBar() {
 		<>
         <form onSubmit={handelSubmit}>
 			<span className="search-span">Search: </span>
-			<input type="text" value={home_Query}  onChange={(e) => setHome_Query(e.target.value)} onKeyDown={handleSearchFunction}/>
+			<input
+                // autofocus
+                ref={refFocus}
+                type="text" value={home_Query}
+                onChange={(e) => setHome_Query(e.target.value)}
+                onKeyDown={handleSearchFunction}/>
         </form>
 		</>
 	);

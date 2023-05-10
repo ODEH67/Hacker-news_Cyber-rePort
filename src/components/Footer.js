@@ -10,11 +10,11 @@ export default function Footer() {
                 <Link href="https://www.ycombinator.com/apply/">Applications are open for YC Summer 2023</Link>
                 <br/>
                 <span className="footer_links">
-                    <Link to="#" >Guidelines</Link> | 
-                    <Link to="#" >FAQ</Link> | 
-                    <Link to="#" >Lists</Link> | 
+                    <Link to="https://news.ycombinator.com/newsguidelines.html" >Guidelines</Link> | 
+                    <Link to="https://news.ycombinator.com/newsfaq.html" >FAQ</Link> | 
+                    {/* <Link to="#" >Lists</Link> |  */}
                     <Link to="https://github.com/HackerNews/API" target="_blank">API</Link> | 
-                    <Link to="#">Security</Link> | 
+                    <Link to="https://news.ycombinator.com/security.html">Security</Link> | 
                     <Link to="https://www.ycombinator.com/legal/" target="_blank">Legal</Link> | 
                     <Link to="https://www.ycombinator.com/apply/" target="_blank">Apply to YC</Link> | 
                     <Link to="mailto:hn@ycombinator.com" target="_blank">Contact</Link>
