@@ -149,11 +149,11 @@ h2.no-result {
   }
 }
 
-/*              //this is for the Markup <em> tags in search context.js (not working as expected)
+            /*this is for the Markup <em> tags in search context.js (not working as expected)
 .post-div em {
   background: #ff0!important;
   color: #000!important;
   font-style: normal;
   font-weight: 700;
-} */
-
+} 
+*/
