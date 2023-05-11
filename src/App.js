@@ -13,7 +13,7 @@ function App() {
 
 	const { loading } = useContext(SearchContext);
 
- 
+
 	//let [loading, setLoading] = useState(true);
 
 	//const { DataFetch, ...state} = useContext(SearchContextProvider)
@@ -53,7 +53,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			 {loading ? (
+			{loading ? (
 				<HashLoader
 					color="#ff6600"
 					cssOverride={{ margin: "40vh auto" }}

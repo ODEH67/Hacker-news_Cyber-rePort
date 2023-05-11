@@ -166,33 +166,33 @@ export default function SearchContextProvider({ children }) {
 			// //console.log("data.page", data.page)
 			// //console.log("data.nbHits", data.nbHits)
 
-			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  commented this line out in order to make the code between line 179 to 195 to work
-			// dispatch({
-			// 	type: ACTIONS.SET_POSTS,
-			// 	payload: {
-			// 		hits: data.hits,
-			// 		nbPages: data.nbPages
-			// 	},
-			// });
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  commented this line out in order to make the code between line 179 to 195 to work (edit: the code is back again in order to make the filters work, but no marking)
+			dispatch({
+				type: ACTIONS.SET_POSTS,
+				payload: {
+					hits: data.hits,
+					nbPages: data.nbPages
+				},
+			});
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ for marking up the searched words in yellow, but it still not work as expected,some words missing or the marking is still appearing after deleting the search bar
-		let updatedHits = data.hits;
-		const searchTerm = state.query;
-		if (searchTerm !== "") {
-			const regex = new RegExp(searchTerm, "gi");
-			updatedHits = data.hits.map((hit) => {
-			const updatedTitle = hit.title.replace(regex, "<em>$&</em>");
-			return { ...hit, title: updatedTitle };
-			});
-		}
+		// let updatedHits = data.hits;
+		// const searchTerm = state.query;
+		// if (searchTerm !== "") {
+		// 	const regex = new RegExp(searchTerm, "gi");
+		// 	updatedHits = data.hits.map((hit) => {
+		// 	const updatedTitle = hit.title.replace(regex, "<em>$&</em>");
+		// 	return { ...hit, title: updatedTitle };
+		// 	});
+		// }
 
-		dispatch({
-			type: ACTIONS.SET_POSTS,
-			payload: {
-			hits: updatedHits,
-			nbPages: data.nbPages,
-			},
-		});
+		// dispatch({
+		// 	type: ACTIONS.SET_POSTS,
+		// 	payload: {
+		// 	hits: updatedHits,
+		// 	nbPages: data.nbPages,
+		// 	},
+		// });
 //   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		} catch (error) {
 		console.log(error.message);
