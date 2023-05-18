@@ -2,6 +2,7 @@ import { createContext,useContext  } from "react";
 import SearchBar from "./SearchBar";
 import { Routes, Route, NavLink, Link } from "react-router-dom";
 import { SearchContext } from "../context/SearchContext";
+import logo2 from "./logo2.png"
 
 
 function Header() {
@@ -16,10 +17,10 @@ function Header() {
 						<Link className="logo-div" onClick={handleGoToHome} to='/' >		
 							<img
 								className="logo"
-								src="https://news.ycombinator.com/y18.gif"
+								src={logo2}
 								alt=""
 							/>
-							<h1>Hacker News</h1>
+							<h1>Cyber rePort</h1>
 						</Link>
 					</div>
 					{/* <nav>

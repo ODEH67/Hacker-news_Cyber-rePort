@@ -11,7 +11,7 @@
 }
 
 .header {
-  background-color: #ff6600;
+  background-color: #08c3e0;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 10pt;
   padding: 0 1rem;
@@ -23,24 +23,28 @@
 .logo-div {
   display: flex;
   align-items: center;
-  color:#000;
+  color: rgb(8, 0, 8);
   text-decoration: none;
   cursor: pointer;
 }
 
 .header .logo {
-  border: 1px solid white;
-  margin: 0 .5rem;
+  /* border: 1px solid white; */
+ padding: 0.4em;
+  height: 5em;
+  width: 3.8em;
 }
 
 .header h1 {
   font-size: 16px;
+  color: #500771;
 }
 
 .header-left, .header-right {
   display: flex;
   gap: 1rem;
   align-items: center;
+  color: #000;
 }
 
 .header-right {

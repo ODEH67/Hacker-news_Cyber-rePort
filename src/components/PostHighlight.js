@@ -1,4 +1,4 @@
-import { IoMdArrowDropup } from "react-icons/io";
+import { BsDot } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import CreatedAt from "./CreatedAt";
 import GetHostName from "./GetHostName";
@@ -24,7 +24,7 @@ console.log("hits",hits)
 											<div className="post-div" key={uuidv4()}>
 												<div className="number-upvote">
 													{page * 30 + idx + 1}.
-													<IoMdArrowDropup className="arrow-up" />
+													<BsDot className="arrow-up" />
 												</div>
 												<div className="highlights">
 													<div className="first-line">
