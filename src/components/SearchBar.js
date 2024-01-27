@@ -1,11 +1,12 @@
 import { Routes, Route, NavLink, Link, useNavigate,useLocation  } from "react-router-dom";
 import { SearchContext } from "../context/SearchContext";
 import { useContext,useState,useEffect, useRef } from "react";
+import { IoSearchOutline } from "react-icons/io5";
 
 function SearchBar() {
 
     const { handleSearch,query_reset } = useContext(SearchContext);
-	//we will have to create a QueryContext, and set the query with [query, setQuery] from the search bar so that we can filter the results on the search page?????
+	//we will have to create a QueryContext, and set the query with [query, setQuery] from the searchbar so that we can filter the results on the search page??
     //maybe, I'm not sure, this is just a note
     const [home_Query, setHome_Query]= useState(query_reset)
 
@@ -22,6 +23,12 @@ function SearchBar() {
             handleSearch(home_Query)
         }
     }
+
+    const handleSearchButton = () => {
+            navigate('/search')
+            handleSearch(home_Query)
+        }
+
 
     useEffect(() => {
         if (location.pathname === "/search") {
@@ -47,6 +54,7 @@ function SearchBar() {
                 type="text" value={home_Query}
                 onChange={(e) => setHome_Query(e.target.value)}
                 onKeyDown={handleSearchFunction}/>
+        <span className="search-click" onClick={handleSearchButton} ><IoSearchOutline /></span>
         </form>
 		</>
 	);

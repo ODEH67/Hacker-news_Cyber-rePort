@@ -13,7 +13,6 @@ root.render(
       <App />
     </BrowserRouter>
   </SearchContextProvider>
-
 );
 
 // to log results (for example: reportWebVitals(console.log))

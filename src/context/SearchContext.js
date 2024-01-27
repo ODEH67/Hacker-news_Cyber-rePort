@@ -64,7 +64,7 @@ const reducer = (state, action) => {
 				...state,								// but the reason of adding this is because of the pagination to reset to the first page when browsing through many pages of the 35 pages
 				query: "",
 				query_reset : "",
-				by_date_points: "https://hn.algolia.com/api/v1/search_by_date?",
+				by_date_points: process.env.REACT_APP_by_date_points_SEARCH_BY_DATE,
 				sectiony: 'Stories',
 				sort: 'Date',
 				tags: "tags=story&",
@@ -89,7 +89,7 @@ const reducer = (state, action) => {
 					return {
 					...state,
 					sort: 'Popularity',
-					by_date_points: "https://hn.algolia.com/api/v1/search?"
+					by_date_points: process.env.REACT_APP_by_date_points_SEARCH
 				};
 
 				case ACTIONS.DATE_FILTER:													//working Date filter
@@ -97,7 +97,7 @@ const reducer = (state, action) => {
 					return {
 						...state,
 						sort: "Date",
-						by_date_points: "https://hn.algolia.com/api/v1/search_by_date?"
+						by_date_points: process.env.REACT_APP_by_date_points_SEARCH_BY_DATE
 					}
 
 				case ACTIONS.STORIES_FILTER:												//working STORIES_FILTER filter
@@ -142,7 +142,7 @@ export default function SearchContextProvider({ children }) {
 		nbPages: 0,
 		query_reset : "",
 		tags: "tags=story&",
-		by_date_points: "https://hn.algolia.com/api/v1/search_by_date?",
+		by_date_points: process.env.REACT_APP_by_date_points_SEARCH_BY_DATE,
 		sort: 'Date',
 		sectiony: 'Stories',
 	};
